@@ -8,14 +8,16 @@ import javax.persistence.*;
 @Entity
 public class Notes {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
     private Recipe recipe;
+
     @Lob
-    private Long recipeNotes;
+    private String recipeNotes;
 
     public Long getId() {
         return id;
@@ -33,11 +35,11 @@ public class Notes {
         this.recipe = recipe;
     }
 
-    public Long getRecipeNotes() {
+    public String getRecipeNotes() {
         return recipeNotes;
     }
 
-    public void setRecipeNotes(Long recipeNotes) {
+    public void setRecipeNotes(String recipeNotes) {
         this.recipeNotes = recipeNotes;
     }
 }
