@@ -2,7 +2,6 @@ package com.gauro.spring5recipe.controllers;
 
 import com.gauro.spring5recipe.domain.Recipe;
 import com.gauro.spring5recipe.services.RecipeService;
-import com.sun.xml.internal.ws.server.EndpointFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -83,6 +82,7 @@ class IndexControllerTest {
     @Test
     void testMockMVC() throws Exception {
         MockMvc mockMvc= MockMvcBuilders.standaloneSetup(indexController).build();
+
 
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
