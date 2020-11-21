@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -57,7 +58,26 @@ public class Recipe {
         return this;
     }
 
-//    public Long getId() {
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+//                ", prepTime=" + prepTime +
+//                ", cookTime=" + cookTime +
+//                ", servings=" + servings +
+//                ", source='" + source + '\'' +
+//                ", url='" + url + '\'' +
+//                ", directions='" + directions + '\'' +
+//                ", ingredients=" + ingredients +
+//                ", image=" + Arrays.toString(image) +
+//                ", difficulty=" + difficulty +
+//                ", notes=" + notes +
+//                ", categories=" + categories +
+                '}';
+    }
+
+    //    public Long getId() {
 //        return id;
 //    }
 //

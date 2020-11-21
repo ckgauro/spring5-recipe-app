@@ -1,9 +1,5 @@
 package com.gauro.spring5recipe.controllers;
 
-import com.gauro.spring5recipe.domain.Category;
-import com.gauro.spring5recipe.domain.UnitOfMeasure;
-import com.gauro.spring5recipe.repositories.CategoryRepository;
-import com.gauro.spring5recipe.repositories.UnitOfMeasureRepository;
 import com.gauro.spring5recipe.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
