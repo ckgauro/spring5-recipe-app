@@ -34,7 +34,7 @@ public class RecipeServiceImpl implements RecipeService {
     public Set<Recipe> getRecipes() {
         log.debug("I'm in service Imp");
         log.info("============>>>>>>>>>>>>");
-        Set<Recipe>  recipeSet=new HashSet<>();
+        Set<Recipe> recipeSet = new HashSet<>();
         recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
         log.info("======getRecipes===Starts===>>>>>>>>>>>>");
         log.info(recipeSet.toString());
@@ -43,13 +43,16 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe findById(Long l){
+    public Recipe findById(Long l) {
         log.info("============>>>>>>>>>>>>");
         Optional<Recipe> recipeOptional =recipeRepository.findById(l);
         if(!recipeOptional.isPresent()){
             throw new RuntimeException("Recipe not found");
         }
         return  recipeOptional.get();
+
+//        return recipeRepository.findById(l)
+//                .orElseThrow(() -> new RuntimeException("Recipe not found"));
     }
 
     @Transactional

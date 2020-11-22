@@ -35,7 +35,7 @@
                                 <ul>
                                     <li th:remove="all">Cat one</li>
                                     <li th:remove="all">Cat two</li>
-<!--                                    <li th:each="category : ${recipe.categories}" th:text="${category.getDescription()}">cat three</li>-->
+                                    <li th:each="category : ${recipe.categories}" th:text="${category.getDescription()}">cat three</li>
                                 </ul>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                                 <h5>URL:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p> <a href="#" th:href="${recipe.url}"> View Original</a></p>
+                                <p th:text="${recipe.url}"> <a href="#" th:href="${recipe.url}"> View Original</a></p>
                             </div>
                         </div>
                     </div>
