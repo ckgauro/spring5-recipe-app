@@ -3,6 +3,7 @@ package com.gauro.spring5recipe.converters;
 import com.gauro.spring5recipe.commands.RecipeCommand;
 import com.gauro.spring5recipe.domain.Recipe;
 import lombok.Synchronized;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author Chandra
  */
+@Slf4j
 @Component
 public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
     private final CategoryCommandToCategory categoryConveter;
@@ -28,7 +30,10 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
     @Nullable
     @Override
     public Recipe convert(RecipeCommand source) {
+      //  log.info(source.toString());
+        log.debug((source==null)+" ");
         if(source==null){
+            log.info("Null value tiggered======>");
             return null;
         }
         final Recipe recipe = new Recipe();
