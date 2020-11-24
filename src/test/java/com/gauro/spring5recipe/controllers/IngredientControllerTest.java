@@ -1,5 +1,6 @@
 package com.gauro.spring5recipe.controllers;
 
+import com.gauro.spring5recipe.commands.IngredientCommand;
 import com.gauro.spring5recipe.commands.RecipeCommand;
 import com.gauro.spring5recipe.services.IngredientService;
 import com.gauro.spring5recipe.services.RecipeService;
@@ -30,14 +31,15 @@ class IngredientControllerTest {
     IngredientController controller;
 
     MockMvc mockMvc;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
-
-        controller = new IngredientController( recipeService, ingredientService);
+        controller = new IngredientController(recipeService, ingredientService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
+
     @Test
     public void testListIngredients() throws Exception {
         //given
@@ -53,4 +55,22 @@ class IngredientControllerTest {
         //then
         verify(recipeService, times(1)).findCommandById(anyLong());
     }
+
+    @Test
+    public void testShowIngredient() throws Exception {
+        //given
+        IngredientCommand ingredientCommand = new IngredientCommand();
+
+        //when
+        when(ingredientService.findByRecipeIdAndIngredientId(anyLong(), anyLong())).thenReturn(ingredientCommand);
+
+        //then
+        mockMvc.perform(get("/recipe/1/ingredient/6/show"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/ingredient/show"))
+                .andExpect(model().attributeExists("ingredient"))
+
+        ;
+    }
+
 }
