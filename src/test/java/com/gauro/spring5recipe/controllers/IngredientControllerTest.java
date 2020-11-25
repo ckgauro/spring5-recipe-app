@@ -4,6 +4,7 @@ import com.gauro.spring5recipe.commands.IngredientCommand;
 import com.gauro.spring5recipe.commands.RecipeCommand;
 import com.gauro.spring5recipe.services.IngredientService;
 import com.gauro.spring5recipe.services.RecipeService;
+import com.gauro.spring5recipe.services.UnitOfMeasureService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -32,11 +33,14 @@ class IngredientControllerTest {
 
     MockMvc mockMvc;
 
+    @Mock
+    private UnitOfMeasureService unitOfMeasureService;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        controller = new IngredientController(recipeService, ingredientService);
+        controller = new IngredientController(recipeService, ingredientService, unitOfMeasureService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
