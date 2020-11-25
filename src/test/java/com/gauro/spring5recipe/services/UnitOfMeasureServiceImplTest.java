@@ -31,7 +31,6 @@ class UnitOfMeasureServiceImplTest {
 
         unitOfMeasureService = new UnitOfMeasureServiceImpl(unitOfMeasureRepository, unitOfMeasureToUnitOfMeasureCommand);
     }
-
     @Test
     public void ListAllUoms()  throws Exception{
         //given
