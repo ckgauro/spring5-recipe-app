@@ -27,18 +27,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Chandra
  */
 class IngredientControllerTest {
-    @Mock
-    RecipeService recipeService;
 
     @Mock
     IngredientService ingredientService;
+
+    @Mock
+    private UnitOfMeasureService unitOfMeasureService;
+
+    @Mock
+    RecipeService recipeService;
 
     IngredientController controller;
 
     MockMvc mockMvc;
 
-    @Mock
-    private UnitOfMeasureService unitOfMeasureService;
 
     @BeforeEach
     void setUp() {
@@ -99,6 +101,7 @@ class IngredientControllerTest {
         verify(recipeService, times(1)).findCommandById(anyLong());
 
     }
+
     @Test
     public void testUpdateIngredientForm() throws Exception {
         //given
@@ -130,10 +133,20 @@ class IngredientControllerTest {
         mockMvc.perform(post("/recipe/2/ingredient")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("id", "")
-                .param("description", "some string")        )
+                .param("description", "some string"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/2/ingredient/3/show"));
 
+    }
+
+    @Test
+    public void testDeleteIngredient() throws Exception {
+        //then
+        mockMvc.perform(get("/recipe/2/ingredient/3/delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/recipe/2/ingredients"));
+
+        verify(ingredientService, times(1)).deleteById(anyLong(), anyLong());
     }
 
 
