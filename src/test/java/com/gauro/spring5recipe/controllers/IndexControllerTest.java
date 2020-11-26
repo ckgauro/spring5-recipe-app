@@ -45,6 +45,7 @@ class IndexControllerTest {
         indexController = new IndexController(recipeService);
     }
 
+
     @Test
     void getIndexPageFirst() {
         String viewName = indexController.getIndexPage(model);

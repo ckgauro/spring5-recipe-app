@@ -47,12 +47,14 @@ class IngredientServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        ingredientService=new IngredientServiceImpl(ingredientToIngredientCommand, ingredientCommandToIngredient, recipeRepository, unitOfMeasureRepository);
+        ingredientService=new IngredientServiceImpl(ingredientToIngredientCommand, ingredientCommandToIngredient,
+                recipeRepository, unitOfMeasureRepository);
     }
     @Test
     public void findByRecipeIdAndId(){
 
     }
+
     @Test
     public void findByRecipeIdAndReceipeIdHappyPath() throws Exception {
         //given
