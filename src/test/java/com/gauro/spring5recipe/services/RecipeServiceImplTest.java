@@ -1,11 +1,13 @@
 package com.gauro.spring5recipe.services;
 
+import com.gauro.spring5recipe.controllers.NotFoundException;
 import com.gauro.spring5recipe.converters.RecipeCommandToRecipe;
 import com.gauro.spring5recipe.converters.RecipeToRecipeCommand;
 import com.gauro.spring5recipe.domain.Recipe;
 import com.gauro.spring5recipe.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -14,7 +16,6 @@ import org.mockito.MockitoAnnotations;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import static org.mockito.Mockito.*;
 
@@ -76,6 +77,23 @@ class RecipeServiceImplTest {
 
 
     }
+
+    @Test
+    public void getRecipeByIdTestNotFound() throws Exception {
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+
+            Optional<Recipe> recipeOptional = Optional.empty();
+
+            when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+            Recipe recipeReturned = recipeService.findById(1L);
+
+        });
+
+        //should go boom
+    }
+
     @Test
     public void getRecipesTest() throws Exception {
 

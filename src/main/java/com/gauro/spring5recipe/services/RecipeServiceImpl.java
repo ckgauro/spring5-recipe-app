@@ -1,6 +1,7 @@
 package com.gauro.spring5recipe.services;
 
 import com.gauro.spring5recipe.commands.RecipeCommand;
+import com.gauro.spring5recipe.controllers.NotFoundException;
 import com.gauro.spring5recipe.converters.RecipeCommandToRecipe;
 import com.gauro.spring5recipe.converters.RecipeToRecipeCommand;
 import com.gauro.spring5recipe.domain.Recipe;
@@ -45,11 +46,12 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Recipe findById(Long l) {
         log.info("============>>>>>>>>>>>>");
-        Optional<Recipe> recipeOptional =recipeRepository.findById(l);
-        if(!recipeOptional.isPresent()){
-            throw new RuntimeException("Recipe not found");
+        Optional<Recipe> recipeOptional = recipeRepository.findById(l);
+        if (!recipeOptional.isPresent()) {
+            // throw new RuntimeException("Recipe not found");
+            throw new NotFoundException("Recipe not found");
         }
-        return  recipeOptional.get();
+        return recipeOptional.get();
 
 //        return recipeRepository.findById(l)
 //                .orElseThrow(() -> new RuntimeException("Recipe not found"));

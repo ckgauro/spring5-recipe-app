@@ -52,6 +52,16 @@ class RecipeControllerTest {
     }
 
     @Test
+    public void testGetRecipeNotFound() throws Exception{
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+        mockMvc.perform(get("/recipe/new"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/recipeform"))
+                .andExpect(model().attributeExists("recipe"));
+    }
+
+
+    @Test
     public void testGetNewRecipeForm() throws Exception {
         RecipeCommand command = new RecipeCommand();
         mockMvc.perform(get("/recipe/new"))
