@@ -1,12 +1,19 @@
 package com.gauro.spring5recipe.controllers;
 
+import com.gauro.spring5recipe.commands.RecipeCommand;
 import com.gauro.spring5recipe.services.ImageService;
 import com.gauro.spring5recipe.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Chandra
@@ -36,6 +43,23 @@ public class ImageController {
         log.debug("handleImagePost called =====>");
         return "redirect:/recipe/"+id+"/show";
     }
+
+    @GetMapping("recipe/{id}/recipeimage")
+    public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException{
+        RecipeCommand recipeCommand=recipeService.findCommandById(Long.valueOf(id));
+        if(recipeCommand.getImage()!=null){
+            byte[] byteArray=new byte[recipeCommand.getImage().length];
+            int i=0;
+            for(Byte wrappeByte:recipeCommand.getImage()){
+                byteArray[i++]=wrappeByte;
+            }
+            response.setContentType("image/jpeg");
+            InputStream is = new ByteArrayInputStream(byteArray);
+            IOUtils.copy(is, response.getOutputStream());
+        }
+
+    }
+
 
 
 }
