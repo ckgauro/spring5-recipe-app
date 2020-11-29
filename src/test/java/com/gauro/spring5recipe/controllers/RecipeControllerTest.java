@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import com.gauro.spring5recipe.commands.RecipeCommand;
 import com.gauro.spring5recipe.domain.Recipe;
 import com.gauro.spring5recipe.services.RecipeService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -35,7 +36,9 @@ class RecipeControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         recipeController = new RecipeController(recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(recipeController)
+                .setControllerAdvice(new ControllerExceptionHandler())
+                .build();
 
     }
 
@@ -69,9 +72,11 @@ class RecipeControllerTest {
     @Test
     public void testGetRecipeNumberFormatException() throws Exception {
 
-        mockMvc.perform(get("/recipe/asdf/show"))
-                .andExpect(status().isBadRequest())
-                .andExpect(view().name("400error"));
+            mockMvc.perform(get("/recipe/asdf/show"))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(view().name("400error"));
+
+
     }
 
     @Test

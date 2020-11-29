@@ -24,7 +24,10 @@ public class RecipeController {
     @GetMapping("/recipe/{id}/show")
     public String showById(@PathVariable String id, Model model){
         log.debug("showById is called ======>"+id);
-        model.addAttribute("recipe", recipeService.findById(Long.valueOf(id)));
+      //  model.addAttribute("recipe", recipeService.findById(Long.valueOf(id)));
+        log.debug("Recipe show is calling showById====================>"+id);
+        model.addAttribute("recipe", recipeService.findById(new Long(id)));
+        log.debug("Recipe show is calling showById data fetched=======******============>");
         log.info(recipeService.findById(Long.valueOf(id)).toString());
         return "recipe/show";
     }
@@ -71,17 +74,17 @@ public class RecipeController {
         return modelAndView;
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NumberFormatException.class)
-    public ModelAndView  handleNumberFormat(Exception exception){
-        log.error("Handling Number Format Exception");
-        log.error(exception.getMessage());
-
-        ModelAndView modelAndView=new ModelAndView();
-        modelAndView.setViewName("400error");
-        modelAndView.addObject("exception",exception);
-        return  modelAndView;
-    }
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(NumberFormatException.class)
+//    public ModelAndView  handleNumberFormat(Exception exception){
+//        log.error("Handling Number Format Exception");
+//        log.error(exception.getMessage());
+//
+//        ModelAndView modelAndView=new ModelAndView();
+//        modelAndView.setViewName("400error");
+//        modelAndView.addObject("exception",exception);
+//        return  modelAndView;
+//    }
 
 
 
