@@ -1,11 +1,8 @@
 package com.gauro.spring5recipe.controllers;
 
-import static org.mockito.ArgumentMatchers.any;
-
 import com.gauro.spring5recipe.commands.RecipeCommand;
 import com.gauro.spring5recipe.domain.Recipe;
 import com.gauro.spring5recipe.services.RecipeService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -14,9 +11,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -60,6 +58,7 @@ class RecipeControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(view().name("404error"));
     }
+
     @Test
     public void testGetRecipeNotFound1() throws Exception {
 
@@ -69,12 +68,13 @@ class RecipeControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(view().name("404error"));
     }
+
     @Test
     public void testGetRecipeNumberFormatException() throws Exception {
 
-            mockMvc.perform(get("/recipe/asdf/show"))
-                    .andExpect(status().isBadRequest())
-                    .andExpect(view().name("400error"));
+        mockMvc.perform(get("/recipe/asdf/show"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"));
 
 
     }
@@ -100,8 +100,23 @@ class RecipeControllerTest {
                 .param("id", "")
                 .param("description", "some string"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/recipe/2/show"))
-        ;
+                .andExpect(view().name("redirect:/recipe/2/show"));
+    }
+
+    @Test
+    public void testPostNewRecipeFormValidationFail() throws Exception {
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        when(recipeService.saveRecipeCommand(any())).thenReturn(recipeCommand);
+        mockMvc.perform(post("/recipe")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", ""))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("recipe"))
+                .andExpect(view().name("recipe/recipeform"));
+
+
     }
 
     @Test
